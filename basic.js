@@ -1,3 +1,4 @@
+let COUNT = 5; // number of wiki items to generate
 let allWikiItems = document.getElementById('all-wiki-items');
 
 // lets create five wiki items
@@ -78,7 +79,7 @@ async function fetchWikiText(breedName) {
 
 async function generateWikiItems() {
     let fetchPromises = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < COUNT; i++) {
         fetchPromises.push(fetchDogImage());
     }
     breedInfo = await Promise.all(fetchPromises); // waits for all promises to resolve
