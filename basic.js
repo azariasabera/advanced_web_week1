@@ -28,7 +28,7 @@ console.log('I am here2');
     wikiContent.appendChild(wikiText);
     wikiContent.appendChild(imgContainer);
     wikiItem.appendChild(header);
-    wikiItem.appendChild(content);
+    wikiItem.appendChild(wikiContent);
 
     allWikiItems.appendChild(wikiItem);
 }
@@ -36,36 +36,42 @@ console.log('I am here2');
 let breedInfo = [];
 
 async function fetchDogImage() {
-    let url = 'https://dog.ceo/api/breeds/image/random';
-    let response = await fetch(url);
-    let data = await response.json();
+    let breedName = null;
+    let wikiText = null;
+    let imageURL = null;
+    let maxTries = 5;
 
-    // check if the breed name is valid
-    let breedName = data.message.split('/')[4];
-    let promise = await fetchWikiText(breedName);
-    if (!promise) {
-        fetchDogImage();
-        return;
+    while(!wikiText && maxTries) {
+        let url = 'https://dog.ceo/api/breeds/image/random';
+        let response = await fetch(url);
+        let data = await response.json();
+
+        breedName = data.message.split('/')[4];
+        imageURL = data.message;
+        wikiText = await fetchWikiText(breedName);
+        maxTries--;
     }
 
-    breedInfo.push({
+    return{
         breedName: breedName.charAt(0).toUpperCase() + breedName.slice(1),
-        imageURL: data.message,
-        text: promise
-        });
-    //console.log(breedInfo);
+        imageURL: imageURL,
+        text: wikiText
+    };
 }
 
 
 async function fetchWikiText(breedName) {
-    console.log(breedName);
+    breedName = breedName.split('-').join(' ');
     let url = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + breedName;
     try {
         let response = await fetch(url);
+
+        if(response.status !== 200) throw new Error({msg: "Data not found!", breedName});
+
         let data = await response.json();
         return data.extract;
     } catch (error) {
-        //console.log(error);
+        console.log({error});
         return false;
     }
 }
@@ -75,14 +81,10 @@ async function generateWikiItems() {
     for (let i = 0; i < 5; i++) {
         fetchPromises.push(fetchDogImage());
     }
-    await Promise.all(fetchPromises); // waits for all promises to resolve
-
-    console.log(breedInfo);
+    breedInfo = await Promise.all(fetchPromises); // waits for all promises to resolve
     breedInfo.forEach(breed => {
-        console.log('I am here' + breedInfo.length);
         createWikiItem(breed.breedName, breed.text, breed.imageURL);
     });
 }
 
 generateWikiItems();
-
