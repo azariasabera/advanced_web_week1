@@ -42,37 +42,32 @@ async function fetchDogImage() {
 
     // check if the breed name is valid
     let breedName = data.message.split('/')[4];
-    let isValid = await checkBreedName(breedName);
-    if (!isValid) {
+    let promise = await fetchWikiText(breedName);
+    if (!promise) {
         fetchDogImage();
         return;
     }
 
     breedInfo.push({
-        
-        breedName: breedName,
+        breedName: breedName.charAt(0).toUpperCase() + breedName.slice(1),
         imageURL: data.message,
-        text: await fetchWikiText(breedName)
+        text: promise
         });
     console.log(breedInfo);
 }
 
 
 async function fetchWikiText(breedName) {
+    console.log(breedName);
     let url = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + breedName;
-    let response = await fetch(url);
-    let data = await response.json();
-    return data.extract;
-}
-
-async function checkBreedName(name) {
-    // we know fetchWikiText returns a promise. In case the url is not found, it will return an error.
-    // To handle this, if the promise is rejected return false, else return true 
-    // so I can call for fetching of a random image again
-    console.log(name);
-    /*if (await fetchWikiText(name) === undefined) {
+    try {
+        let response = await fetch(url);
+        let data = await response.json();
+        return data.extract;
+    } catch (error) {
+        //console.log(error);
         return false;
-    }*/
+    }
 }
 
 let btn = document.getElementById('btn');
