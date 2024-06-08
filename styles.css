@@ -3,11 +3,12 @@
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #cccccc;
 }
 .wiki-header {
     font-size: 24px;
     margin-bottom: 10px;
+    text-align: center;
 }
 .wiki-content {
     display: flex;
@@ -17,13 +18,37 @@
 .wiki-text {
     font-size: 16px;
     margin-bottom: 10px;
+    order: 2; /* Position after the image */
 }
 .img-container {
-    width: 100%;
+    /* make equal size for all images */
+    width: 300px;
+    height: 200px;
     display: flex;
     justify-content: center;
+    order: 1; /* Position before the text */
 }
 .wiki-img {
     max-width: 100%;
     border-radius: 5px;
+}
+
+@media screen and (min-width: 600px) {
+    /* For screens 600px or wider */
+    /* Make the text and image side by side */
+    /* Assign half of the screen width to each */
+    .wiki-content {
+        flex-direction: row;
+        margin: 40px;
+    }
+    .wiki-text {
+        width: 50%;
+        order: 1; /* Position before the image */
+    }
+    .img-container {
+        /* make the image fit the container */
+        width: 50%;
+        height: 80%;
+        order: 2; /* Position after the text */
+    }
 }

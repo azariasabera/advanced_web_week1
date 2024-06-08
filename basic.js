@@ -3,7 +3,6 @@ let allWikiItems = document.getElementById('all-wiki-items');
 
 // lets create five wiki items
 function createWikiItem(breedName, text, imageURL) {
-console.log('I am here2');
     let wikiItem = document.createElement('div');
     wikiItem.classList.add('wiki-item');
 
@@ -83,6 +82,7 @@ async function generateWikiItems() {
         fetchPromises.push(fetchDogImage());
     }
     breedInfo = await Promise.all(fetchPromises); // waits for all promises to resolve
+    console.log(breedInfo);
     breedInfo.forEach(breed => {
         createWikiItem(breed.breedName, breed.text, breed.imageURL);
     });
