@@ -2,7 +2,7 @@ let allWikiItems = document.getElementById('all-wiki-items');
 
 // lets create five wiki items
 function createWikiItem(breedName, text, imageURL) {
-
+console.log('I am here2');
     let wikiItem = document.createElement('div');
     wikiItem.classList.add('wiki-item');
 
@@ -30,7 +30,7 @@ function createWikiItem(breedName, text, imageURL) {
     wikiItem.appendChild(header);
     wikiItem.appendChild(content);
 
-    return wikiItem;
+    allWikiItems.appendChild(wikiItem);
 }
 
 let breedInfo = [];
@@ -53,7 +53,7 @@ async function fetchDogImage() {
         imageURL: data.message,
         text: promise
         });
-    console.log(breedInfo);
+    //console.log(breedInfo);
 }
 
 
@@ -70,7 +70,19 @@ async function fetchWikiText(breedName) {
     }
 }
 
-let btn = document.getElementById('btn');
-btn.addEventListener('click', () => {
-    fetchDogImage();
-});
+async function generateWikiItems() {
+    let fetchPromises = [];
+    for (let i = 0; i < 5; i++) {
+        fetchPromises.push(fetchDogImage());
+    }
+    await Promise.all(fetchPromises); // waits for all promises to resolve
+
+    console.log(breedInfo);
+    breedInfo.forEach(breed => {
+        console.log('I am here' + breedInfo.length);
+        createWikiItem(breed.breedName, breed.text, breed.imageURL);
+    });
+}
+
+generateWikiItems();
+
