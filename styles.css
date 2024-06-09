@@ -3,7 +3,8 @@
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
-    background-color: #cccccc;
+    /* I want each item to have a shadow from each side */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .wiki-header {
@@ -16,10 +17,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
 .wiki-text {
-    max-width: 50%;
+    /* max-width: 50%; */
     font-size: 16px;
     margin-bottom: 10px;
     order: 2; /* Position after the image */
@@ -27,9 +29,9 @@
 
 .img-container {
     /* make equal size for all images */
-    width: 300px;
+    /* width: 300px;
     height: 200px;
-    display: flex;
+     */display: flex;
     justify-content: center;
     order: 1; /* Position before the text */
 }
@@ -49,20 +51,24 @@
     }
 
     .wiki-content {
+        display: flex;
         flex-direction: row-reverse;
         margin: 40px;
-        width: 600px;
+        /* width: 600px;
         height: 200px;
-    }
+ */    }
 
     .wiki-text {
         max-width: 50%;
+        min-width: 50%;
         order: 2; /* Position before the image */
     }
 
     .img-container {
-        width: 300px;
-        height: 250px;
+        max-width: 50%;
+        min-width: 50%;
+        /* width: 300px;
+        height: 250px; */
         order: 1; /* Position after the text */
     }
 }
