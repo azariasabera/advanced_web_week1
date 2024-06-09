@@ -34,19 +34,24 @@
 }
 
 @media screen and (min-width: 600px) {
-    /* For screens 600px or wider */
-    /* Make the text and image side by side */
-    /* Assign half of the screen width to each */
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
     .wiki-content {
         flex-direction: row;
         margin: 40px;
+        width: 600px;
+        height: 200px;
     }
     .wiki-text {
         width: 50%;
         order: 1; /* Position before the image */
     }
     .img-container {
-        /* make the image fit the container */
         width: 50%;
         height: 80%;
         order: 2; /* Position after the text */

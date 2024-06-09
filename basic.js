@@ -1,5 +1,5 @@
 let COUNT = 5; // number of wiki items to generate
-let allWikiItems = document.getElementById('all-wiki-items');
+let container = document.querySelector('.container');
 
 // lets create five wiki items
 function createWikiItem(breedName, text, imageURL) {
@@ -8,7 +8,7 @@ function createWikiItem(breedName, text, imageURL) {
 
     let header = document.createElement('h1');
     header.classList.add('wiki-header');
-    header.innerText = "Breed " + breedName;
+    header.innerText = breedName;
  
     let wikiContent = document.createElement('div');
     wikiContent.classList.add('wiki-content');
@@ -30,7 +30,7 @@ function createWikiItem(breedName, text, imageURL) {
     wikiItem.appendChild(header);
     wikiItem.appendChild(wikiContent);
 
-    allWikiItems.appendChild(wikiItem);
+    container.appendChild(wikiItem);
 }
 
 let breedInfo = [];
@@ -39,9 +39,9 @@ async function fetchDogImage() {
     let breedName = null;
     let wikiText = null;
     let imageURL = null;
-    let maxTries = 5;
+    // let maxTries = 5;
 
-    while(!wikiText && maxTries) {
+    while(!wikiText && COUNT) {
         let url = 'https://dog.ceo/api/breeds/image/random';
         let response = await fetch(url);
         let data = await response.json();
@@ -49,7 +49,7 @@ async function fetchDogImage() {
         breedName = data.message.split('/')[4];
         imageURL = data.message;
         wikiText = await fetchWikiText(breedName);
-        maxTries--;
+        COUNT--;
     }
 
     return{
