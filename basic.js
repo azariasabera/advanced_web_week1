@@ -1,4 +1,4 @@
-// let COUNT = 5; // number of wiki items to generate
+let COUNT = 5; // number of wiki items to generate
 let container = document.querySelector('.container');
 
 // lets create five wiki items
