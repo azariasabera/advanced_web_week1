@@ -1,4 +1,4 @@
-let COUNT = 5; // number of wiki items to generate
+// let COUNT = 5; // number of wiki items to generate
 let container = document.querySelector('.container');
 
 // lets create five wiki items
@@ -39,9 +39,9 @@ async function fetchDogImage() {
     let breedName = null;
     let wikiText = null;
     let imageURL = null;
-    // let maxTries = 5;
+    let maxTries = 5;
 
-    while(!wikiText && COUNT) {
+    while(!wikiText && maxTries) {
         let url = 'https://dog.ceo/api/breeds/image/random';
         let response = await fetch(url);
         let data = await response.json();
@@ -49,7 +49,7 @@ async function fetchDogImage() {
         breedName = data.message.split('/')[4];
         imageURL = data.message;
         wikiText = await fetchWikiText(breedName);
-        COUNT--;
+        maxTries--;
     }
 
     return{
