@@ -77,15 +77,16 @@ async function fetchWikiText(breedName) {
 }
 
 async function generateWikiItems() {
-    let fetchPromises = [];
+    // let fetchPromises = [];
     for (let i = 0; i < COUNT; i++) {
-        fetchPromises.push(fetchDogImage());
+        // fetchPromises.push(fetchDogImage());
+        fetchDogImage().then(breed => {
+            createWikiItem(breed.breedName, breed.text, breed.imageURL);
+        });
     }
-    breedInfo = await Promise.all(fetchPromises); // waits for all promises to resolve
-    console.log(breedInfo);
-    breedInfo.forEach(breed => {
-        createWikiItem(breed.breedName, breed.text, breed.imageURL);
-    });
+    // breedInfo = await Promise.all(fetchPromises); // waits for all promises to resolve
+    // console.log(breedInfo);
+    // breedInfo.forEach();
 }
 
 generateWikiItems();
