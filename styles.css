@@ -19,6 +19,7 @@
 }
 
 .wiki-text {
+    max-width: 50%;
     font-size: 16px;
     margin-bottom: 10px;
     order: 2; /* Position after the image */
@@ -55,7 +56,7 @@
     }
 
     .wiki-text {
-        width: 50%;
+        max-width: 50%;
         order: 2; /* Position before the image */
     }
 
